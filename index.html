@@ -184,7 +184,7 @@ async function loadData() {
   document.getElementById("last-updated").textContent = "Loading...";
   try {
     const res = await fetch(EXCEL_URL + "?t=" + Date.now());
-    if (!res.ok) throw new Error("File not found. Make sure "VDC Short Term Kanban.xlsx" is in the repo root.");
+    if (!res.ok) throw new Error("File not found. Make sure 'VDC Short Term Kanban.xlsx' is in the repo root.");
     const buf = await res.arrayBuffer();
     const wb = XLSX.read(buf, { type: "array", cellDates: true });
     const sheet = wb.Sheets["Consolidated Data"];
