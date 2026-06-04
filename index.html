@@ -175,7 +175,7 @@
 </footer>
 
 <script>
-const EXCEL_URL = "https://raw.githubusercontent.com/nambrosino/processmechdash/main/VDC_Short_Term_Kanban.xlsx";
+const EXCEL_URL = "https://raw.githubusercontent.com/nambrosino/processmechdash/main/VDC%20Short%20Term%20Kanban.xlsx";
 let allTasks = [], projChart, statusChart;
 
 async function loadData() {
@@ -184,7 +184,7 @@ async function loadData() {
   document.getElementById("last-updated").textContent = "Loading...";
   try {
     const res = await fetch(EXCEL_URL + "?t=" + Date.now());
-    if (!res.ok) throw new Error("File not found. Make sure VDC_Short_Term_Kanban.xlsx is in the repo root.");
+    if (!res.ok) throw new Error("File not found. Make sure "VDC Short Term Kanban.xlsx" is in the repo root.");
     const buf = await res.arrayBuffer();
     const wb = XLSX.read(buf, { type: "array", cellDates: true });
     const sheet = wb.Sheets["Consolidated Data"];

@@ -6,11 +6,10 @@ echo.
 
 set FOLDER=%USERPROFILE%\OneDrive - The O'Connell Companies, Inc\Desktop\Claude Code\processmechdash
 
-:: Check Excel file exists
-if not exist "%FOLDER%\VDC_Short_Term_Kanban.xlsx" (
-    echo ERROR: VDC_Short_Term_Kanban.xlsx not found in your folder.
+if not exist "%FOLDER%\VDC Short Term Kanban.xlsx" (
+    echo ERROR: "VDC Short Term Kanban.xlsx" not found in your folder.
     echo Make sure you saved your Planner export to:
-    echo %FOLDER%\VDC_Short_Term_Kanban.xlsx
+    echo %FOLDER%\VDC Short Term Kanban.xlsx
     echo.
     pause
     exit /b 1
@@ -18,7 +17,7 @@ if not exist "%FOLDER%\VDC_Short_Term_Kanban.xlsx" (
 
 echo Pushing latest Kanban export to GitHub...
 cd /d "%FOLDER%"
-git add VDC_Short_Term_Kanban.xlsx
+git add "VDC Short Term Kanban.xlsx"
 git commit -m "Weekly update %date%"
 git push
 

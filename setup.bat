@@ -4,7 +4,6 @@ echo  DOC VDC Dashboard - One-Time Setup
 echo ============================================
 echo.
 
-:: Check git is installed
 git --version >nul 2>&1
 if errorlevel 1 (
     echo ERROR: Git is not installed.
