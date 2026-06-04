@@ -106,6 +106,54 @@
 </head>
 <body>
 
+<!-- Password Gate -->
+<div id="pw-gate" style="display:none;position:fixed;inset:0;z-index:9999;background:#f0f2f5;display:flex;align-items:center;justify-content:center;">
+  <div style="background:#fff;border-radius:12px;padding:40px 48px;box-shadow:0 4px 24px rgba(0,0,0,0.10);width:100%;max-width:380px;text-align:center;">
+    <div style="font-size:13px;font-weight:700;letter-spacing:.12em;color:#1a7a6e;text-transform:uppercase;margin-bottom:8px;">DOC VDC Group</div>
+    <div style="font-size:22px;font-weight:700;color:#1a1a1a;margin-bottom:6px;">Dashboard Login</div>
+    <div style="font-size:13px;color:#888;margin-bottom:28px;">Enter the password to continue</div>
+    <input id="pw-input" type="password" placeholder="Password"
+      style="width:100%;box-sizing:border-box;padding:12px 16px;border:1.5px solid #ddd;border-radius:8px;font-size:15px;margin-bottom:12px;outline:none;"
+      onkeydown="if(event.key==='Enter')checkPw()"/>
+    <div id="pw-error" style="color:#AF272F;font-size:13px;margin-bottom:10px;min-height:18px;"></div>
+    <button onclick="checkPw()"
+      style="width:100%;padding:13px;background:#1a3a2a;color:#fff;border:none;border-radius:8px;font-size:15px;font-weight:600;cursor:pointer;letter-spacing:.03em;">
+      Enter Dashboard
+    </button>
+  </div>
+</div>
+<script>
+(function(){
+  const HASH = "a3b4c5d6e7f8a9b0c1d2e3f4a5b6c7d8e9f0a1b2c3d4e5f6a7b8c9d0e1f2a3b4";
+  async function sha256(msg) {
+    const buf = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(msg));
+    return Array.from(new Uint8Array(buf)).map(b=>b.toString(16).padStart(2,"0")).join("");
+  }
+  async function init() {
+    if (sessionStorage.getItem("doc_auth") === "1") return;
+    document.getElementById("pw-gate").style.display = "flex";
+    document.body.style.overflow = "hidden";
+    // compute correct hash on first run and store it
+    const correct = await sha256("DOCest1879");
+    window._pwCorrect = correct;
+  }
+  window.checkPw = async function() {
+    const val = document.getElementById("pw-input").value;
+    const entered = await sha256(val);
+    if (entered === window._pwCorrect) {
+      sessionStorage.setItem("doc_auth","1");
+      document.getElementById("pw-gate").style.display = "none";
+      document.body.style.overflow = "";
+    } else {
+      document.getElementById("pw-error").textContent = "Incorrect password. Please try again.";
+      document.getElementById("pw-input").value = "";
+      document.getElementById("pw-input").focus();
+    }
+  };
+  init();
+})();
+</script>
+
 <div class="topbar">
   <div class="topbar-left">
     <div class="doc-wordmark">DOC</div>
